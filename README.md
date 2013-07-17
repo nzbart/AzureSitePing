@@ -1,7 +1,5 @@
-AzureSitePing
+Azure Site Ping=============
 
-=============
-
-A tiny website with Tiny.html purely used for gathering latency statistics against Azure websites.
+A simple website that pings multiple Windows Azure data centres so that you can find the most appropriate for your location. Modelled after http://cloudping.info.
 
 You can run the ping test at http://nzbart.github.io/AzureSitePing.
