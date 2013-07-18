@@ -1,31 +1,39 @@
 ﻿<!DOCTYPE html>
 <html ng-app="AzurePing">
-    <head>
-        <title>AzurePing.info - which datacentre is best for you?</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-        <script src="Script/Site.min.js"></script>
-    </head>
-<body ng-controller="AzurePingCtrl">
-    <p>Windows Azure is available in several datacentres - which one is best for you, and how much difference does it make?</p>
-    <p>The timings below are run from your browser.</p>
+<head>
+    <title>AzurePing.info - which datacentre is best for you?</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="Styles/Site.min.css" rel="stylesheet" type='text/css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script src="Script/Site.min.js"></script>
+</head>
+    <body ng-controller="AzurePingCtrl">
+        <h1>AzurePing.info</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Datacentre</th>
-                <th>Latency</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="datacentre in datacentres">
-                <td>{{datacentre.location}}</td>
-                <td>{{datacentre.latencyMessage}}</td>
-            </tr>
-        </tbody>
-    </table>    
-    
-    <button ng-click="run()">Go!</button>
+        <div class="content-outer-hack">
+            <div class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Datacentre</th>
+                            <th class="latency">Latency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="datacentre in datacentres">
+                            <td>{{datacentre.location}}</td>
+                            <td class="latency">{{datacentre.latencyMessage}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <p>For Amazon Web Services timings, please see <a href="http://www.cloudping.info/">cloudping.info</a>.</p>
-</body>
+                <div class="button-hack">
+                    <button class="bigbutton" ng-click="run()">Go!</button>
+                </div>
+            </div>
+        </div>
+        <p>Windows Azure is available in several datacentres - which one is best for you, and how much difference does it make?</p>
+        <p>The timings above are run from within your browser.</p>
+        <p>For Amazon Web Services timings, please see <a href="http://www.cloudping.info/">cloudping.info</a>.</p>
+    </body>
 </html>
