@@ -3,7 +3,8 @@
 ap.controller('AzurePingCtrl', [
     '$scope',
     '$http',
-    function ($scope, $http) {
+    '$timeout',
+    function ($scope, $http, $timeout) {
         $scope.datacentres = [
             { location: 'West USA (California)', url: 'westusa' },
             { location: 'North Central USA (Chicago, IL)', url: 'northcentralusa' },
@@ -22,9 +23,12 @@ ap.controller('AzurePingCtrl', [
             return new Date().getTime();
         };
 
-        angular.forEach($scope.datacentres, function (datacentre) {
-            execute(datacentre.url);
-        });
+        var warmupServers = function () {
+            return angular.forEach($scope.datacentres, function (datacentre) {
+                execute(datacentre.url);
+            });
+        };
+        $timeout(warmupServers, 100, false);
 
         $scope.run = function () {
             angular.forEach($scope.datacentres, function (datacentre) {

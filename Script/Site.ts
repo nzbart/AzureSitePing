@@ -15,8 +15,8 @@ interface IAzurePingScope extends ng.IScope {
     run(): void;
 }
 
-ap.controller('AzurePingCtrl', ['$scope', '$http',
-    ($scope: IAzurePingScope, $http: ng.IHttpService) => {
+ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
+    ($scope: IAzurePingScope, $http: ng.IHttpService, $timeout: ng.ITimeoutService) => {
         $scope.datacentres = [
             { location: 'West USA (California)', url: 'westusa' },
             { location: 'North Central USA (Chicago, IL)', url: 'northcentralusa' },
@@ -30,9 +30,10 @@ ap.controller('AzurePingCtrl', ['$scope', '$http',
         var getTime = () => new Date().getTime()
 
         //warm up server on page load
-        angular.forEach($scope.datacentres, (datacentre: IAzureDatacentre) => {
+        var warmupServers = () => angular.forEach($scope.datacentres, (datacentre: IAzureDatacentre) => {
             execute(datacentre.url)
         });
+        $timeout(warmupServers, 100, false);
 
         //button handler - hit each server twice, but ignore the first timing
         $scope.run = () => {
