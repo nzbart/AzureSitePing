@@ -12,24 +12,39 @@ ap.controller('AzurePingCtrl', [
             { location: 'East Asia (Hong Kong, China)', url: 'eastasia' }
         ];
 
+        var getUrl = function (datacentreUrl) {
+            return 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx?callback=JSON_CALLBACK';
+        };
+        var execute = function (datacentreUrl) {
+            return $http.jsonp(getUrl(datacentreUrl), { cache: false, timeout: 10000 });
+        };
+        var getTime = function () {
+            return new Date().getTime();
+        };
+
+        angular.forEach($scope.datacentres, function (datacentre) {
+            execute(datacentre.url);
+        });
+
         $scope.run = function () {
             angular.forEach($scope.datacentres, function (datacentre) {
                 datacentre.latencyMessage = 'Loading...';
-                var url = 'http://' + datacentre.url + '-azure.azurewebsites.net/Tiny.ashx?callback=JSON_CALLBACK';
+                datacentre.isFailure = false;
 
-                $http.jsonp(url, { cache: false, timeout: 10000 }).error(function (reason) {
-                    datacentre.failureReason = reason;
-                }).success(function () {
-                    var start = new Date().getTime();
-                    $http.jsonp(url, { cache: false, timeout: 10000 }).error(function (reason) {
-                        datacentre.failureReason = reason;
+                var gatherData = function () {
+                    var start = getTime();
+                    execute(datacentre.url).error(function () {
+                        datacentre.latencyMessage = "Failed";
+                        datacentre.isFailure = true;
                     }).success(function () {
-                        var complete = new Date().getTime();
+                        var complete = getTime();
                         var elapsed = complete - start;
                         datacentre.latencyMilliseconds = elapsed;
                         datacentre.latencyMessage = elapsed + " ms";
                     });
-                });
+                };
+
+                execute(datacentre.url).then(gatherData, gatherData);
             });
         };
     }
