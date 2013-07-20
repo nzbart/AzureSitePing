@@ -19,6 +19,9 @@ table {
   padding: 10px;
   border-collapse: collapse;
 }
+table .datacentre {
+  text-align: left;
+}
 table th {
   border-bottom: 2px solid #6678b1;
   margin: 0;

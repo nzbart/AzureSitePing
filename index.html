@@ -30,13 +30,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Datacentre</th>
+                        <th class="datacentre">Datacentre</th>
                         <th class="latency">Latency</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="datacentre in datacentres | orderBy:'latencyMilliseconds'">
-                        <td>{{datacentre.location}}</td>
+                        <td class="datacentre">{{datacentre.location}}</td>
                         <td class="latency">{{datacentre.latencyMessage}}</td>
                     </tr>
                 </tbody>
@@ -50,5 +50,7 @@
     <p>Windows Azure is available in several datacentres - which one is best for you, and how much difference does it make?</p>
     <p>The timings above are run from within your browser.</p>
     <p>For Amazon Web Services timings, please see <a href="http://www.cloudping.info/">cloudping.info</a>.</p>
+    <p>Having problems with this site? Want to help improve it? Head over to Github and submit a <a href="https://github.com/nzbart/AzureSitePing/issues">bug report or feature request</a>, 
+        or <a href="https://github.com/nzbart/AzureSitePing">contribute some code</a>.</p>
 </body>
 </html>
