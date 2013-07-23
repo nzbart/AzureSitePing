@@ -12,6 +12,7 @@ interface IAzureDatacentre {
 
 interface IAzurePingScope extends ng.IScope {
     datacentres: IAzureDatacentre[];
+    supportsPerformanceApi: boolean;
     run(): void;
 }
 
@@ -25,9 +26,29 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
             { location: 'East Asia (Hong Kong, China)', url: 'eastasia' }
         ];
 
-        var getUrl = datacentreUrl => 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx?callback=JSON_CALLBACK';
-        var execute = datacentreUrl => $http.jsonp(getUrl(datacentreUrl), { cache: false, timeout: 10000 })
+        var getUrl = (datacentreUrl: string, excludeJson?: boolean) => 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '': '?callback=JSON_CALLBACK');
+        var execute = (datacentreUrl: string) => $http.jsonp(getUrl(datacentreUrl), { cache: false, timeout: 10000 })
         var getTime = () => new Date().getTime()
+        var doesSupportPerformanceApi = () => !!(window.performance && window.performance.getEntries);
+        var getMostPreciseTime = (url: string, lowResolutionTime: number) => {
+            if (!doesSupportPerformanceApi()) {
+                return lowResolutionTime;
+            }
+            
+            var fullUrlPrefix = getUrl(url, true);
+            var thisUrlReadings = window.performance.getEntries().filter(val => val.name.indexOf(fullUrlPrefix) === 0);
+            if (thisUrlReadings === 0) {
+                return lowResolutionTime;
+            }
+            var thisUrlMostRecentReading = thisUrlReadings[thisUrlReadings.length - 1];
+            if (!thisUrlMostRecentReading.duration) {
+                return lowResolutionTime;
+            }
+
+            return Math.round(thisUrlMostRecentReading.duration);
+        }
+
+        $scope.supportsPerformanceApi = doesSupportPerformanceApi();
 
         //warm up server on page load
         var warmupServers = () => angular.forEach($scope.datacentres, (datacentre: IAzureDatacentre) => {
@@ -50,10 +71,10 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
                             datacentre.isFailure = true;
                         })
                         .success(() => {
-                            var complete = getTime();
-                            var elapsed = complete - start;
-                            datacentre.latencyMilliseconds = elapsed;
-                            datacentre.latencyMessage = elapsed + " ms";
+                            var elapsed = getTime() - start;
+                            var complete = getMostPreciseTime(datacentre.url, elapsed);
+                            datacentre.latencyMilliseconds = complete;
+                            datacentre.latencyMessage = complete + " ms";
                         });
                 }
                 

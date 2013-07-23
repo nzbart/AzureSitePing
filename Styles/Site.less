@@ -5,6 +5,7 @@
 }
 
 @borderColour: #6678b1;
+@tableWidth: 430px;
 
 h1 {
     border-bottom: 1px solid @borderColour;
@@ -20,10 +21,19 @@ h1 {
     display: inline-block;
 }
 
+.smallprint {
+    margin-top: 1em;
+    font-size: 0.8em;
+    color: grey;
+    width: @tableWidth;
+    text-align:justify;
+}
+
 table {
     border: 2px solid @borderColour;
     padding: 10px;
     border-collapse: collapse;
+    width: @tableWidth;
 
     .datacentre {
         text-align: left;

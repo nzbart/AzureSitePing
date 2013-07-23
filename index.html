@@ -7,7 +7,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href="Styles/Site.min.css" rel="stylesheet" type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="Script/Site.min.js"></script>
+    <script src="Script/Site.js"></script>
 
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -41,6 +41,12 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="smallprint" style="display: none" ng-hide="supportsPerformanceApi">
+                Note: your browser does not support the performance API. 
+                For the most reliable results, try Chrome or Internet Explorer 10+.
+                The figures here are obtained using your browser's clock, which has known issues.
+            </div>
 
             <div class="button-hack">
                 <button class="bigbutton" ng-click="run()">Go!</button>
