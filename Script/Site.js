@@ -1,4 +1,6 @@
-﻿var ap = angular.module('AzurePing', []);
+﻿/// <reference path="../definitelytyped/angularjs/angular.d.ts" />
+/// <reference path="../definitelytyped/google.analytics/ga.d.ts" />
+var ap = angular.module('AzurePing', []);
 
 ap.controller('AzurePingCtrl', [
     '$scope',
@@ -47,6 +49,7 @@ ap.controller('AzurePingCtrl', [
 
         $scope.supportsPerformanceApi = doesSupportPerformanceApi();
 
+        //warm up server on page load
         var warmupServers = function () {
             return angular.forEach($scope.datacentres, function (datacentre) {
                 execute(datacentre.url);
@@ -54,11 +57,16 @@ ap.controller('AzurePingCtrl', [
         };
         $timeout(warmupServers, 100, false);
 
+        //button handler - hit each server twice, but ignore the first timing
         $scope.run = function () {
+            if (typeof _gaq !== "undefined")
+                _gaq.push(['_trackEvent', 'ButtonClicks', 'GoButtonClicked', 'Go button clicked']);
+
             angular.forEach($scope.datacentres, function (datacentre) {
                 datacentre.latencyMessage = 'Loading...';
                 datacentre.isFailure = false;
 
+                //closes around datacentre
                 var gatherData = function () {
                     var start = getTime();
                     execute(datacentre.url).error(function () {
@@ -72,6 +80,7 @@ ap.controller('AzurePingCtrl', [
                     });
                 };
 
+                //Hit the page twice, but only grab the second reading. This ensures DNS is resolved etc.
                 execute(datacentre.url).then(gatherData, gatherData);
             });
         };
