@@ -24,12 +24,7 @@
     <script>
         //unhandled exception logging
         window.onerror = function (message, file, lineNumber) {
-            _gaq.push([
-                '_trackEvent',
-                'error',
-                file + ':' + lineNumber,
-                message + ''
-            ]);
+            ga('send', 'event', 'exception', file + ': ' + lineNumber, message);
         };
     </script>
 </head>

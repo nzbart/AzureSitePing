@@ -1,5 +1,5 @@
 ﻿/// <reference path="../definitelytyped/angularjs/angular.d.ts" />
-/// <reference path="../definitelytyped/google.analytics/ga.d.ts" />
+declare var ga: any;
 
 var ap = angular.module('AzurePing', []);
 
@@ -60,8 +60,9 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
         //button handler - hit each server twice, but ignore the first timing
         $scope.run = () => {
             //log the click with Google analytics
-            if(typeof _gaq !== "undefined")
-                _gaq.push(['_trackEvent', 'ButtonClicks', 'GoButtonClicked', 'Go button clicked']); 
+            if (typeof ga !== "undefined") {
+                ga('send', 'event', 'user action', 'button click', 'GO Button');
+            }
 
             angular.forEach($scope.datacentres, (datacentre: IAzureDatacentre) => {
                 datacentre.latencyMessage = 'Loading...'
