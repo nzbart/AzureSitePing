@@ -13,7 +13,9 @@ ap.controller('AzurePingCtrl', [
             { location: 'South Brazil (Sao Paulo)', url: 'southbrazil' },
             { location: 'East Asia (Hong Kong, China)', url: 'eastasia' },
             { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
-            { location: 'South East Asia (Singapore)', url: 'southeastasia' }
+            { location: 'South East Asia (Singapore)', url: 'southeastasia' },
+            { location: 'East Japan (Saitama)', url: 'eastjapan' },
+            { location: 'West Japan (Osaka)', url: 'westjapan' }
         ];
 
         var getUrl = function (datacentreUrl, excludeJson) {
