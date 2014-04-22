@@ -20,11 +20,14 @@ interface IAzurePingScope extends ng.IScope {
 ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
     ($scope: IAzurePingScope, $http: ng.IHttpService, $timeout: ng.ITimeoutService) => {
         $scope.datacentres = [
-            { location: 'West USA (California)', url: 'westusa' },
-            { location: 'North Central USA (Chicago, IL)', url: 'northcentralusa' },
-            { location: 'East USA (Virginia)', url: 'eastusa' },
+            { location: 'East USA (Boydton, Virginia)', url: 'eastusa' },
+            { location: 'North Central USA (Chicago, Illinois)', url: 'northcentralusa' },
             { location: 'North Europe (Dublin, Ireland)', url: 'northeurope' },
-            { location: 'East Asia (Hong Kong, China)', url: 'eastasia' }
+            { location: 'West USA (California)', url: 'westusa' },
+            { location: 'South Brazil (Sao Paulo)', url: 'southbrazil' },
+            { location: 'East Asia (Hong Kong, China)', url: 'eastasia' },
+            { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
+            { location: 'South East Asia (Singapore)', url: 'southeastasia' }
         ];
 
         var getUrl = (datacentreUrl: string, excludeJson?: boolean) => 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '': '?callback=JSON_CALLBACK');

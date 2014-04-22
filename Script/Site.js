@@ -6,11 +6,14 @@ ap.controller('AzurePingCtrl', [
     '$timeout',
     function ($scope, $http, $timeout) {
         $scope.datacentres = [
-            { location: 'West USA (California)', url: 'westusa' },
-            { location: 'North Central USA (Chicago, IL)', url: 'northcentralusa' },
-            { location: 'East USA (Virginia)', url: 'eastusa' },
+            { location: 'East USA (Boydton, Virginia)', url: 'eastusa' },
+            { location: 'North Central USA (Chicago, Illinois)', url: 'northcentralusa' },
             { location: 'North Europe (Dublin, Ireland)', url: 'northeurope' },
-            { location: 'East Asia (Hong Kong, China)', url: 'eastasia' }
+            { location: 'West USA (California)', url: 'westusa' },
+            { location: 'South Brazil (Sao Paulo)', url: 'southbrazil' },
+            { location: 'East Asia (Hong Kong, China)', url: 'eastasia' },
+            { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
+            { location: 'South East Asia (Singapore)', url: 'southeastasia' }
         ];
 
         var getUrl = function (datacentreUrl, excludeJson) {

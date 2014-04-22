@@ -18,14 +18,14 @@ h1 {
   margin-top: 1em;
   font-size: 0.8em;
   color: grey;
-  width: 430px;
+  width: 520px;
   text-align: justify;
 }
 table {
   border: 2px solid #6678b1;
   padding: 10px;
   border-collapse: collapse;
-  width: 430px;
+  width: 520px;
 }
 table .datacentre {
   text-align: left;
@@ -77,3 +77,4 @@ button.bigbutton:active {
   position: relative;
   top: 1px;
 }
+/*# sourceMappingURL=Site.css.map */
