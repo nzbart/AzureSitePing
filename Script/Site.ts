@@ -29,7 +29,9 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
             { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
             { location: 'South East Asia (Singapore)', url: 'southeastasia' },
             { location: 'East Japan (Saitama)', url: 'eastjapan' },
-            { location: 'West Japan (Osaka)', url: 'westjapan' }
+            { location: 'West Japan (Osaka)', url: 'westjapan' },
+            { location: 'East Australia (Sydney)', url: 'eastaustralia' },
+            { location: 'South East Australia (Melbourne)', url: 'southeastaustralia' }
         ];
 
         var getUrl = (datacentreUrl: string, excludeJson?: boolean) => 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '': '?callback=JSON_CALLBACK');

@@ -1,9 +1,9 @@
-﻿var ap = angular.module('AzurePing', []);
+﻿/// <reference path="../definitelytyped/angularjs/angular.d.ts" />
+
+var ap = angular.module('AzurePing', []);
 
 ap.controller('AzurePingCtrl', [
-    '$scope',
-    '$http',
-    '$timeout',
+    '$scope', '$http', '$timeout',
     function ($scope, $http, $timeout) {
         $scope.datacentres = [
             { location: 'East USA (Boydton, Virginia)', url: 'eastusa' },
@@ -15,7 +15,9 @@ ap.controller('AzurePingCtrl', [
             { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
             { location: 'South East Asia (Singapore)', url: 'southeastasia' },
             { location: 'East Japan (Saitama)', url: 'eastjapan' },
-            { location: 'West Japan (Osaka)', url: 'westjapan' }
+            { location: 'West Japan (Osaka)', url: 'westjapan' },
+            { location: 'East Australia (Sydney)', url: 'eastaustralia' },
+            { location: 'South East Australia (Melbourne)', url: 'southeastaustralia' }
         ];
 
         var getUrl = function (datacentreUrl, excludeJson) {
@@ -62,6 +64,7 @@ ap.controller('AzurePingCtrl', [
 
         //button handler - hit each server twice, but ignore the first timing
         $scope.run = function () {
+            //log the click with Google analytics so that I know whether enough people are using the site to justify its existence
             if (typeof ga !== "undefined") {
                 ga('send', 'event', 'user action', 'button click', 'GO Button');
             }
@@ -88,5 +91,4 @@ ap.controller('AzurePingCtrl', [
                 execute(datacentre.url).then(gatherData, gatherData);
             });
         };
-    }
-]);
+    }]);
