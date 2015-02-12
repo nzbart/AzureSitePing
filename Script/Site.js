@@ -6,16 +6,23 @@ ap.controller('AzurePingCtrl', [
     '$scope', '$http', '$timeout',
     function ($scope, $http, $timeout) {
         $scope.datacentres = [
-            { location: 'East USA (Boydton, Virginia)', url: 'eastusa' },
+            //USA
+            { location: 'Central USA (Iowa)', url: 'centralusa' },
             { location: 'North Central USA (Chicago, Illinois)', url: 'northcentralusa' },
-            { location: 'North Europe (Dublin, Ireland)', url: 'northeurope' },
+            { location: 'South Central USA (San Antonio, Texas)', url: 'southcentralusa' },
             { location: 'West USA (California)', url: 'westusa' },
+            { location: 'East USA (Boydton, Virginia)', url: 'eastusa' },
+            //Rest of Americas
             { location: 'South Brazil (Sao Paulo)', url: 'southbrazil' },
+            //Asia
             { location: 'East Asia (Hong Kong, China)', url: 'eastasia' },
-            { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
             { location: 'South East Asia (Singapore)', url: 'southeastasia' },
             { location: 'East Japan (Saitama)', url: 'eastjapan' },
             { location: 'West Japan (Osaka)', url: 'westjapan' },
+            //Europe
+            { location: 'North Europe (Dublin, Ireland)', url: 'northeurope' },
+            { location: 'West Europe (Amsterdam, Netherlands)', url: 'westeurope' },
+            //Oceania
             { location: 'East Australia (Sydney)', url: 'eastaustralia' },
             { location: 'South East Australia (Melbourne)', url: 'southeastaustralia' }
         ];
@@ -64,7 +71,7 @@ ap.controller('AzurePingCtrl', [
 
         //button handler - hit each server twice, but ignore the first timing
         $scope.run = function () {
-            //log the click with Google analytics so that I know whether enough people are using the site to justify its existence
+            //log the click with Google analytics
             if (typeof ga !== "undefined") {
                 ga('send', 'event', 'user action', 'button click', 'GO Button');
             }
