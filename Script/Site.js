@@ -81,21 +81,26 @@ ap.controller('AzurePingCtrl', [
                 datacentre.isFailure = false;
 
                 //closes around datacentre
-                var gatherData = function () {
-                    var start = getTime();
-                    execute(datacentre.url).error(function () {
-                        datacentre.latencyMessage = "Failed";
-                        datacentre.isFailure = true;
-                    }).success(function () {
-                        var elapsed = getTime() - start;
-                        var complete = getMostPreciseTime(datacentre.url, elapsed);
-                        datacentre.latencyMilliseconds = complete;
-                        datacentre.latencyMessage = complete + " ms";
-                    });
+                var gatherData = function (stagger) {
+                    //introduce a random delay to reduce interference across requests
+                    $timeout(function () {
+                        var start = getTime();
+                        execute(datacentre.url).error(function () {
+                            datacentre.latencyMessage = "Failed";
+                            datacentre.isFailure = true;
+                        }).success(function () {
+                            var elapsed = getTime() - start;
+                            var complete = getMostPreciseTime(datacentre.url, elapsed);
+                            datacentre.latencyMilliseconds = complete;
+                            datacentre.latencyMessage = complete + " ms";
+                        });
+                    }, stagger ? (Math.random() * 10000) : 0);
                 };
 
                 //Hit the page twice, but only grab the second reading. This ensures DNS is resolved etc.
-                execute(datacentre.url).then(gatherData, gatherData);
+                execute(datacentre.url).then(gatherData, function () {
+                    gatherData(true);
+                });
             });
         };
     }]);

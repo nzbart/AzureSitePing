@@ -88,23 +88,26 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
                 datacentre.isFailure = false;
 
                 //closes around datacentre
-                var gatherData = () => {
-                    var start = getTime();
-                    execute(datacentre.url)
-                        .error(() => {
-                            datacentre.latencyMessage = "Failed";
-                            datacentre.isFailure = true;
-                        })
-                        .success(() => {
-                            var elapsed = getTime() - start;
-                            var complete = getMostPreciseTime(datacentre.url, elapsed);
-                            datacentre.latencyMilliseconds = complete;
-                            datacentre.latencyMessage = complete + " ms";
-                        });
+                var gatherData = (stagger) => {
+                    //introduce a random delay to reduce interference across requests
+                    $timeout(() => {
+                        var start = getTime();
+                        execute(datacentre.url)
+                            .error(() => {
+                                datacentre.latencyMessage = "Failed";
+                                datacentre.isFailure = true;
+                            })
+                            .success(() => {
+                                var elapsed = getTime() - start;
+                                var complete = getMostPreciseTime(datacentre.url, elapsed);
+                                datacentre.latencyMilliseconds = complete;
+                                datacentre.latencyMessage = complete + " ms";
+                            });
+                    }, stagger ? (Math.random() * 10000) : 0);
                 }
                 
                 //Hit the page twice, but only grab the second reading. This ensures DNS is resolved etc.
-                execute(datacentre.url).then(gatherData, gatherData);
+                execute(datacentre.url).then(gatherData, () => { gatherData(true); } );
             });
         };
     }]);
