@@ -46,7 +46,7 @@ ap.controller('AzurePingCtrl', ['$scope', '$http', '$timeout',
             { location: 'South East Australia (Melbourne)', url: 'southeastaustralia' }
         ];
 
-        var getUrl = (datacentreUrl: string, excludeJson?: boolean) => 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '': '?callback=JSON_CALLBACK');
+        var getUrl = (datacentreUrl: string, excludeJson?: boolean) => 'https://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '': '?callback=JSON_CALLBACK');
         var execute = (datacentreUrl: string) => $http.jsonp(getUrl(datacentreUrl), { cache: false, timeout: 10000 })
         var getTime = () => new Date().getTime()
         var doesSupportPerformanceApi = () => !!(window.performance && window.performance.getEntries);
