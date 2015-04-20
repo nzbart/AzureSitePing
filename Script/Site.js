@@ -28,7 +28,7 @@ ap.controller('AzurePingCtrl', [
         ];
 
         var getUrl = function (datacentreUrl, excludeJson) {
-            return 'http://' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '' : '?callback=JSON_CALLBACK');
+            return '//' + datacentreUrl + '-azure.azurewebsites.net/Tiny.ashx' + (excludeJson ? '' : '?callback=JSON_CALLBACK');
         };
         var execute = function (datacentreUrl) {
             return $http.jsonp(getUrl(datacentreUrl), { cache: false, timeout: 10000 });
